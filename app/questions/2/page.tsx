@@ -1,15 +1,17 @@
 'use client'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import React, { useEffect, useLayoutEffect, useState } from 'react'
 
 const Questions = () => {
   const [data, setData]: any[] = useState([])
   const [isSelected, setSelected] = useState(false)
-  const [correctAnswersCount, setCorrectAnswersCount] = useState(0)
+  const [correctAnswersCount, setCorrectAnswersCount] = useState(
+    sessionStorage.getItem('count')
+  )
 
   useEffect(() => {
     sessionStorage.setItem('count', correctAnswersCount)
-
+    setCorrectAnswersCount(sessionStorage.getItem('count'))
     console.log(sessionStorage.getItem('count'))
   }, [correctAnswersCount])
 
@@ -18,7 +20,7 @@ const Questions = () => {
     setSelected(!isSelected)
 
     if (e.target.value === data[0]?.correctAnswer) {
-      setCorrectAnswersCount(correctAnswersCount + 1)
+      setCorrectAnswersCount(parseInt(sessionStorage.getItem('count')) + 1)
       console.log(correctAnswersCount)
     }
   }
@@ -37,7 +39,7 @@ const Questions = () => {
   return (
     <div className='d-block text-light text-center'>
       <div className='text-end me-2 mt-2'>
-        <h3>1/9</h3>
+        <h3>2/9</h3>
       </div>
       <h3 className='mt-5'>{data[0]?.question}</h3>
       <div className='container w-50'>
@@ -111,7 +113,7 @@ const Questions = () => {
       <div>
         {isSelected ? (
           <button className='btn btn-success mt-5'>
-            <Link href='/questions/2'>Next Question</Link>
+            <Link href='/questions/3'>Next Question</Link>
           </button>
         ) : (
           ''
