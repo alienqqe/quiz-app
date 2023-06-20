@@ -6,11 +6,30 @@ const Questions = () => {
   const [data, setData]: any[] = useState([])
   const [isSelected, setSelected] = useState(false)
   const [correctAnswersCount, setCorrectAnswersCount] = useState(0)
+  const [randomQuestionNumber, setRandomQuestionNumber] = useState<number>()
+
+  useLayoutEffect(() => {
+    const randomNumber = Math.floor(Math.random() * 2)
+    setRandomQuestionNumber(randomNumber)
+  }, [])
+
+  // Inline styles
+  const rightIsSelectedAnswerStyle0 = isSelected
+    ? randomQuestionNumber === 0
+      ? { backgroundColor: '#32e358' }
+      : { backgroundColor: '#e33e32 ' }
+    : { backgroundColor: '#6c757d ' }
+
+  const rightIsSelectedAnswerStyle1 = isSelected
+    ? randomQuestionNumber === 1
+      ? { backgroundColor: '#32e358' }
+      : { backgroundColor: '#e33e32 ' }
+    : { backgroundColor: '#6c757d' }
+
+  // Inline styles
 
   useEffect(() => {
     sessionStorage.setItem('count', correctAnswersCount)
-
-    console.log(sessionStorage.getItem('count'))
   }, [correctAnswersCount])
 
   const handleAnswerClick = (e: any) => {
@@ -18,7 +37,7 @@ const Questions = () => {
     setSelected(!isSelected)
 
     if (e.target.value === data[0]?.correctAnswer) {
-      setCorrectAnswersCount(correctAnswersCount + 1)
+      setCorrectAnswersCount(parseInt(sessionStorage.getItem('count')) + 1)
       console.log(correctAnswersCount)
     }
   }
@@ -58,37 +77,25 @@ const Questions = () => {
               >
                 {data[0]?.incorrectAnswers[0]}
               </button>{' '}
-              <button
-                onClick={handleAnswerClick}
-                className=' col-6 my-3 mt-4 mx-1  w-75 btn btn-secondary'
-                value={data[0]?.incorrectAnswers[2]}
-                name='answer'
-                disabled={isSelected ? true : false}
-                style={
-                  isSelected
-                    ? { backgroundColor: '#e33e32' }
-                    : { backgroundColor: '#6c757d ' }
-                }
-              >
-                {data[0]?.incorrectAnswers[2]}
-              </button>{' '}
             </div>
             <div className='answers-2'>
               {' '}
               <button
                 onClick={handleAnswerClick}
                 className='col-6 my-3 mt-4 mx-1 w-75 btn btn-secondary'
-                value={data[0]?.correctAnswer}
+                value={
+                  randomQuestionNumber === 1
+                    ? data[0]?.correctAnswer
+                    : data[0]?.incorrectAnswers[2]
+                }
                 name='answer'
                 disabled={isSelected ? true : false}
-                style={
-                  isSelected
-                    ? { backgroundColor: 'green' }
-                    : { backgroundColor: '#6c757d ' }
-                }
+                style={{ ...rightIsSelectedAnswerStyle1 }}
               >
                 {' '}
-                {data[0]?.correctAnswer}{' '}
+                {randomQuestionNumber === 1
+                  ? data[0]?.correctAnswer
+                  : data[0]?.incorrectAnswers[2]}
               </button>{' '}
               <button
                 onClick={handleAnswerClick}
@@ -103,6 +110,22 @@ const Questions = () => {
                 }
               >
                 {data[0]?.incorrectAnswers[1]}
+              </button>{' '}
+              <button
+                onClick={handleAnswerClick}
+                className=' col-6 my-3 mt-4 mx-1  w-75 btn btn-secondary'
+                value={
+                  randomQuestionNumber === 0
+                    ? data[0]?.correctAnswer
+                    : data[0]?.incorrectAnswers[2]
+                }
+                name='answer'
+                disabled={isSelected ? true : false}
+                style={{ ...rightIsSelectedAnswerStyle0 }}
+              >
+                {randomQuestionNumber === 0
+                  ? data[0]?.correctAnswer
+                  : data[0]?.incorrectAnswers[2]}
               </button>{' '}
             </div>
           </form>
