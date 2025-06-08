@@ -1,35 +1,38 @@
 'use client'
-import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import {
+  setCategoriesGlobally,
+  setCount,
+  setDifficultiesGlobally,
+  setLimitGlobally,
+} from '@/redux/features/quiz-slice'
+import { AppDispatch, useAppSelector } from '@/redux/store'
+import { useRouter } from 'next/navigation'
+import React from 'react'
+import { useDispatch } from 'react-redux'
 
 const page = () => {
-  const [correctAnswersCount, setCorrectAnswersCount] = useState<string>(
-    sessionStorage.getItem('count')
-  )
+  const router = useRouter()
+  const dispatch = useDispatch<AppDispatch>()
+  const count = useAppSelector((state) => state.quizReducer.value.count)
+  const limit = useAppSelector((state) => state.quizReducer.value.limit)
 
-  useEffect(() => {
-    sessionStorage.setItem('count', correctAnswersCount)
-    setCorrectAnswersCount(sessionStorage.getItem('count'))
-    console.log(sessionStorage.getItem('count'))
-  }, [correctAnswersCount])
-
+  const handleClick = () => {
+    router.push('/')
+    dispatch(setCategoriesGlobally([]))
+    dispatch(setDifficultiesGlobally([]))
+    dispatch(setLimitGlobally(1))
+  }
   return (
-    <div className='text-light text-center mt-5 pt-5'>
-      <h1 className='p-3'>Your result:</h1>
-      <h3 className='p-3'>{correctAnswersCount}/9</h3>
-      <p className='p-3'>
-        {correctAnswersCount > 5 ? 'Awesome!' : 'You will be lucky next time'}
-      </p>
+    <div
+      className='text-light d-flex align-items-center justify-content-center flex-column'
+      style={{ height: '100vh' }}
+    >
+      <h1>
+        Your score is {count} / {limit}
+      </h1>
 
-      <button className='btn btn-success'>
-        {correctAnswersCount > 5 ? (
-          <Link href='/questions/1'>Play Again</Link>
-        ) : (
-          <Link href='/questions/1'>Try Again</Link>
-        )}
-      </button>
-      <button className='btn btn-secondary px-4 ms-2'>
-        <Link href='/'>Home</Link>
+      <button className='btn btn-primary mt-4' onClick={handleClick}>
+        Back to home
       </button>
     </div>
   )

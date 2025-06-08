@@ -23,6 +23,21 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "app/questions/3/page.jsx",
+    "app/questions/2/page.jsx",
+    "app/questions/1/page.jsx",
+    "app/questions/6/page.jsx",
+    "app/questions/5/page.jsx",
+    "app/questions/4/page.jsx",
+    "app/questions/9/page.jsx",
+    "app/questions/8/page.jsx",
+    "app/questions/7/page.jsx",
+    "app/results/page.jsx"
+  ],
   "exclude": ["node_modules"]
 }
