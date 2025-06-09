@@ -77,7 +77,7 @@ const Settings = () => {
 
   return (
     <div
-      className='d-flex align-items-center justify-content-around '
+      className='d-flex align-items-center flex-column flex-md-row gap-4 gap-md-0 justify-content-around '
       style={{ width: '100vw' }}
     >
       <div>

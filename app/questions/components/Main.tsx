@@ -87,11 +87,15 @@ const Main = () => {
     >
       <h1 className='mb-5 text-break text-center'>{data[0].question}</h1>
 
-      <div className='d-flex '>
+      <div className='d-flex flex-column flex-md-row'>
         <div className='d-flex flex-column '>
           {left.map((answer, i) => (
             <button
-              style={{ minWidth: '10rem' }}
+              style={{
+                minWidth: '12rem',
+                minHeight: '4rem',
+                whiteSpace: 'nowrap',
+              }}
               key={i}
               className={`btn btn-lg ${
                 answer === data[0].correctAnswer && isAnswered
@@ -109,7 +113,11 @@ const Main = () => {
           {right.map((answer, i) => (
             <button
               key={i}
-              style={{ minWidth: '10rem' }}
+              style={{
+                minWidth: '12rem',
+                minHeight: '4rem',
+                whiteSpace: 'nowrap',
+              }}
               value={answer}
               className={`btn btn-lg ${
                 answer === data[0].correctAnswer && isAnswered
