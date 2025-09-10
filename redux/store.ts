@@ -3,6 +3,7 @@ import { TypedUseSelectorHook, useSelector } from 'react-redux'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 import { persistReducer, persistStore } from 'redux-persist'
 import quizReducer from './features/quiz-slice'
+import authReducer from './features/auth-slice'
 
 const persistConfig = {
   key: 'root',
@@ -11,6 +12,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   quizReducer,
+  authReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
